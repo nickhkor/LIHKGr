@@ -137,14 +137,14 @@ start_scraping <- function(){
     print(paste0("Corpus size: ", nrow(lihkg_df)))
     print(paste0("Finished scraping: ", i))
 
-    if ((i / 5) %% 1 == 0){
+    if ((i / 5) %% 1 == 0 | stopn == i){  # added | stopn == i so that the data are saved at the end of the download
       save.image("lihkg.RData")
       saveRDS(lihkg_df, file = "lihkg_df.rds")
       write.csv(lihkg_df, "lihkg_df.csv", row.names=FALSE, fileEncoding = "UTF-8")
       writeLines(as.character(postid), "lihkg_df_postid.txt")
       print(paste0("Backed up at post id: ", i))
     }
-    n <<- i-1
+    n <<- i+1 # I think it should be i+1 instead of i-1
   }
 }
 
